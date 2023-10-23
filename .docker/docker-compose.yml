@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+    php-example-server:
+        image: nginx:alpine
+        ports:
+            - "9999:80"
+        volumes:
+            - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+            - ../app:/var/www/html
+        networks:
+            - php-example-internal
+    php-example-php:
+        image: php:fpm-alpine
+        volumes:
+            - ../app:/var/www/html
+        networks:
+            - php-example-internal
+networks:
+    php-example-internal:
+        driver: bridge
